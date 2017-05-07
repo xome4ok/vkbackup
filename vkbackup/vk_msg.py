@@ -2,7 +2,7 @@ import json
 import os
 import time
 from datetime import datetime
-from typing import List, Dict, Union
+from typing import List, Dict, Union, Any
 
 from vk.api import API as VKAPI
 
@@ -21,7 +21,11 @@ def attachments_of_type(msgs: List[Dict], attach_type: str) -> List[Dict]:
                ]
 
 
-def text_repr(msgs: List[Dict], participants: Dict, user_name: str = None, peer_name: str = None, date: bool = True) -> List[str]:
+def text_repr(msgs: List[Dict],
+              participants: Dict,
+              user_name: str = None,
+              peer_name: str = None,
+              date: bool = True) -> List[str]:
     """Text representation of conversation.
 
     :param msgs: messages list
@@ -145,7 +149,7 @@ def text_repr(msgs: List[Dict], participants: Dict, user_name: str = None, peer_
     return [to_dialogue(msg, user_name, peer_name) for msg in msgs]
 
 
-def photo_links(msgs: List[Dict]) -> List[str]:
+def photo_links(msgs: List[Dict]) -> List[Dict[str, Any]]:
     """Get all links to attached photos in messages.
 
     :param msgs: list of messages
@@ -153,20 +157,20 @@ def photo_links(msgs: List[Dict]) -> List[str]:
     """
     photo_attachments = attachments_of_type(msgs, 'photo')
     return [dict(
-                type='photo',
-                src_big=photo['photo'].get('src_big', None),
-                src_small=photo['photo'].get('src_small', None),
-                src=photo['photo'].get('src', None),
-                src_xbig=photo['photo'].get('src_xbig', None),
-                src_xxbig=photo['photo'].get('src_xxbig', None),
-                src_xxxbig=photo['photo'].get('src_xxxbig', None),
-                biggest=photo['photo'].get('src_xxxbig', None) or photo['photo'].get('src_xxbig', None) or
+        type='photo',
+        src_big=photo['photo'].get('src_big', None),
+        src_small=photo['photo'].get('src_small', None),
+        src=photo['photo'].get('src', None),
+        src_xbig=photo['photo'].get('src_xbig', None),
+        src_xxbig=photo['photo'].get('src_xxbig', None),
+        src_xxxbig=photo['photo'].get('src_xxxbig', None),
+        biggest=photo['photo'].get('src_xxxbig', None) or photo['photo'].get('src_xxbig', None) or
                 photo['photo'].get('src_xbig', None) or photo['photo'].get('src_big', None) or
                 photo['photo'].get('src', None) or photo['photo'].get('src_small', None)
-            ) for photo in photo_attachments]
+    ) for photo in photo_attachments]
 
 
-def audio_links(msgs: List[Dict]) -> List[Dict]:
+def audio_links(msgs: List[Dict]) -> List[Dict[str, Any]]:
     """Get all attached audio objects in message list.
 
     :param msgs: list of messages:
@@ -174,12 +178,12 @@ def audio_links(msgs: List[Dict]) -> List[Dict]:
     """
     audio_attachments = attachments_of_type(msgs, 'audio')
     return [dict(
-                type='audio',
-                artist=audio['audio'].get('artist') or audio['audio'].get('performer', None),
-                title=audio['audio'].get('title', None),
-                content_restricted='content_restricted' in audio['audio'],
-                url=audio['audio'].get('url', None)
-            ) for audio in audio_attachments]
+        type='audio',
+        artist=audio['audio'].get('artist') or audio['audio'].get('performer', None),
+        title=audio['audio'].get('title', None),
+        content_restricted='content_restricted' in audio['audio'],
+        url=audio['audio'].get('url', None)
+    ) for audio in audio_attachments]
 
 
 class VkMessages:
@@ -206,9 +210,9 @@ class VkMessages:
         }
         all_messages = []
         n = 0
-        total = (self.vkapi.messages.getHistory(chat_id=messages_gethistory_params['id'], count=0)
-                 if is_chat
-                 else self.vkapi.messages.getHistory(user_id=messages_gethistory_params['id'], count=0))[0]
+        # total = (self.vkapi.messages.getHistory(chat_id=messages_gethistory_params['id'], count=0)
+        #         if is_chat
+        #         else self.vkapi.messages.getHistory(user_id=messages_gethistory_params['id'], count=0))[0]
         # print('Going to fetch {} messages'.format(total))
 
         while True:
@@ -246,7 +250,7 @@ class VkMessages:
                                 [
                                     fwd_msg['uid'] for msg in msgs if 'fwd_messages' in msg
                                     for fwd_msg in msg['fwd_messages']
-                                ]
+                                    ]
                             )
                             ))}
 

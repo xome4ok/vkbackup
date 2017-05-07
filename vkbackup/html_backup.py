@@ -171,13 +171,3 @@ def render(path, peer_id, msgs, participants, audio, photo):
                            )
     with open(os.path.join(path, '{}.{}'.format(peer_id, 'html')), 'w', encoding='utf-8') as f:
         f.write(html)
-
-#
-# app_id, token = '4871635', '28c667ee9090986d2f14f29be72d1290707bcb5971b10ad4e0e0a5ea0cc59a060cb807ea0f97b529c7024'
-# peer = 'dariagordienko'
-#
-# m = vk_msg.VkMessages(API(Session(access_token=token)))
-# msgs = m.get_all_from(peer)
-#
-#
-
