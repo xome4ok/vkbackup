@@ -1,0 +1,6 @@
+#!/usr/bin/env python3
+import sys
+
+from vkbackup import vk_backup
+
+vk_backup.main(sys.argv[1:])
