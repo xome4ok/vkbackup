@@ -1,6 +1,8 @@
 # vkbackup
 backing up data from vk.com
 
+token is obtained from vk.com - https://vk.com/dev/authcode_flow_user
+
 ```
 $ vkbackup -h
 usage: vkbackup [-h] peer_id token {json,text,html,audio,photo}
