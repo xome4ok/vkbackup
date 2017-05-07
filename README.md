@@ -19,6 +19,7 @@ positional arguments:
                         be piped to wget); 
                         photo: all links to photos in
                         messages (can be piped to wget);
+                        html: pretty local html with all stuff;
 
 optional arguments:
   -h, --help            show this help message and exit
