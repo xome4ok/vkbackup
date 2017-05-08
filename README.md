@@ -24,3 +24,7 @@ positional arguments:
 optional arguments:
   -h, --help            show this help message and exit
   ```
+
+token is obtained from vk.com - https://vk.com/dev/authcode_flow_user
+
+Installation: ```git clone https://github.com/xome4ok/vkbackup && cd vkbackup && pip install .```
