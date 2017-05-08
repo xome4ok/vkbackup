@@ -1,8 +1,6 @@
 # vkbackup
 backing up data from vk.com
 
-token is obtained from vk.com - https://vk.com/dev/authcode_flow_user
-
 ```
 $ vkbackup -h
 usage: vkbackup [-h] peer_id token {json,text,html,audio,photo}
@@ -26,3 +24,7 @@ positional arguments:
 optional arguments:
   -h, --help            show this help message and exit
   ```
+
+token is obtained from vk.com - https://vk.com/dev/authcode_flow_user
+
+Installation: ```git clone https://github.com/xome4ok/vkbackup && cd vkbackup && pip install .```
