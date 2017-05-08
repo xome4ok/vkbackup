@@ -15,7 +15,12 @@
     <img src="{{attach.image}}"/><p>{{attach.title}}</p>
 {% endif %}
 {% if attach.type == 'wall' %}
-    wall post
+    <p>Wall:{{attach.text}}</p>
+    {% if attach.attachments %}
+    {% for attach2 in attach.attachments %}
+        {{ make_attachment(attach2) }}
+    {% endfor %}
+    {% endif %}
 {% endif %}
 {% if attach.type == 'link' %}
     <a href="{{attach.url}}" target="_blank">{{attach.title}}</a>
