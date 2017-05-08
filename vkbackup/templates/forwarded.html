@@ -2,7 +2,7 @@
 {% macro forwarded_message(forwarded) %}
 <tr>
     <td>{{forwarded.date}}</td>
-        <td><a href="https://vk.com/{{forwarded.user.screen_name}}" target="_blank">{{forwarded.user.first_name}} {{forwarded.user.last_name}}</a></td>
+        <td><a href="https://vk.com/{{forwarded.user.screen_name}}" target="_blank">{{forwarded.user.first_name}}</a></td>
         <td>{{forwarded.body}}</td>
         <td>{% if forwarded.attachments %}
             {% for attach in forwarded.attachments %}

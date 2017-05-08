@@ -49,6 +49,8 @@ div.tab button.active {
 .datagrid tr td:nth-child(2) { width: 10%; }
 
 .outgoing tr {bgcolor: #cc;}
+.datagrid .inner table tbody td {font-size: 10px;}
+.datagrid .inner tr td:nth-child(4) { width: 20%; }
 
 @-webkit-keyframes fadeEffect {
     from {opacity: 0;}

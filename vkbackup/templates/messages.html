@@ -15,9 +15,14 @@
         <td><a href="https://vk.com/{{msg.user.screen_name}}" target="_blank">{{msg.user.first_name}} {{msg.user.last_name}}</a></td>
         <td>{{msg.body}}<br>
             {% if msg.forwarded %}
+            форв
+            <div class="datagrid inner">
+                <table>
                 {% for forwarded in msg.forwarded %}
                     {{ forwarded_message(forwarded) }}
                 {% endfor %}
+                </table>
+                </div>
             {% endif %}
         </td>
         <td>{% if msg.attachments %}
