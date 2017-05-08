@@ -151,7 +151,8 @@ def html_repr(msgs: List[Dict], participants: Dict) -> List[Dict]:
             body=msg['body'].replace('<br>', '\n'),
             forwarded=fwd_to_dict(msg['fwd_messages']) if 'fwd_messages' in msg else None,
             attachments=attachments_to_dicts(attachments) if attachments else None,
-            user=(username if 'out' in msg and msg['out'] else peername) or participants[msg['from_id']]
+            user=(username if 'out' in msg and msg['out'] else peername) or participants[msg['from_id']],
+            is_out='out' in msg and msg['out']
         )
 
     return [to_dialogue(msg) for msg in msgs]

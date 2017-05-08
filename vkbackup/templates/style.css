@@ -33,10 +33,22 @@ div.tab button.active {
     border: 1px solid #ccc;
     border-top: none;
 }
-        .datagrid table { border-collapse: collapse; text-align: left; width: 100%; } .datagrid {font: normal 12px/150% Arial, Helvetica, sans-serif; background: #fff; overflow: hidden; border: 1px solid #8C8C8C; }.datagrid table td, .datagrid table th { padding: 2px 2px; }.datagrid table tbody td { color: #7D7D7D; border-left: 1px solid #DBDBDB;font-size: 12px;border-bottom: 1px solid #E1EEF4;font-weight: normal; }.datagrid table tbody td:first-child { border-left: none; }.datagrid table tbody tr:last-child td { border-bottom: none; } .tabcontent {
+
+.datagrid table { border-collapse: collapse; text-align: left; width: 100%; table-layout: fixed;}
+.datagrid {font: normal 12px/150% Arial, Helvetica, sans-serif; background: #fff; overflow: hidden; border: 1px solid #8C8C8C; }
+.datagrid table td,
+.datagrid table th { padding: 2px 2px; }
+.datagrid table tbody td { color: #7D7D7D; border-left: 1px solid #DBDBDB;font-size: 12px;border-bottom: 1px solid #E1EEF4;font-weight: normal; }
+.datagrid table tbody td:first-child { border-left: none; }
+.datagrid table tbody tr:last-child td { border-bottom: none; }
+.tabcontent {
     -webkit-animation: fadeEffect 1s;
     animation: fadeEffect 1s; /* Fading effect takes 1 second */
 }
+.datagrid tr td:nth-child(1) { width: 10%; }
+.datagrid tr td:nth-child(2) { width: 10%; }
+
+.outgoing tr {bgcolor: #cc;}
 
 @-webkit-keyframes fadeEffect {
     from {opacity: 0;}
