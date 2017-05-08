@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Vk conversation log</title>
+    <style type="text/css">
+        {% include 'style.css' %}
+    </style>
+    <script type="text/javascript">
+        {% include 'script.js' %}
+    </script>
+</head>
+<body>
+<div class="tab">
+  <button class="tablinks" onclick="openTab(event, 'Messages')" id="defaultOpen">Messages({{ msgs|length }})</button>
+  <button class="tablinks" onclick="openTab(event, 'Photo')">Photo({{ photos|length }})</button>
+  <button class="tablinks" onclick="openTab(event, 'Audio')">Audio({{ audios|length }})</button>
+</div>
+{% include 'messages.html' %}
+{% include 'photos.html' %}
+{% include 'audios.html' %}
+<script type="text/javascript">
+        // activate default tab
+        document.getElementById("defaultOpen").click();
+</script>
+</body>
+</html>

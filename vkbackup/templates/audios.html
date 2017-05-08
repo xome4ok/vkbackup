@@ -1,0 +1,15 @@
+<div id="Audio" class="tabcontent">
+    <div class="datagrid">
+        <table>
+            {% for audio in audios %}
+            <tr>
+                <td><a href="{{audio.url if not audio.content_restricted else ''}}" target="_blank">{{audio.artist}} - {{audio.title}}</a></td>
+                <td>{% if audio.content_restricted %}Not available{% else %}
+                     <audio controls preload="none"><source src="{{audio.url}}" type="audio/mpeg">Your browser does not support the audio element.</audio>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>

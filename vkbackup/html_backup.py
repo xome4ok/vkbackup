@@ -159,10 +159,10 @@ def html_repr(msgs: List[Dict], participants: Dict) -> List[Dict]:
 
 def render(path, peer_id, msgs, participants, audio, photo):
     env = Environment(
-        loader=PackageLoader('vk_msg', 'templates'),
+        loader=PackageLoader('vkbackup', 'templates'),
         autoescape=select_autoescape(['html'])
     )
-    messages = env.get_template('messages.html')
+    messages = env.get_template('layout.html')
     html = messages.render(msgs=html_repr(msgs, participants),
                            peer=peer_id,
                            participants=participants,

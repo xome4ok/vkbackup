@@ -1,0 +1,23 @@
+{% macro make_attachment(attach) %}
+{% if attach.type == 'photo' %}
+    <a href="{{attach.biggest}}" target="_blank"><img src="{{attach.src}}"/></a>
+{% endif %}
+{% if attach.type == 'audio' %}
+    <a href="{{attach.url if not attach.content_restricted else ''}}" target="_blank">{{attach.artist}} - {{attach.title}}</a>
+{% endif %}
+{% if attach.type == 'sticker' %}
+    <img src="{{attach.photo_128}}"/>
+{% endif %}
+{% if attach.type == 'doc' %}
+    [{{attach.ext}} {{attach.size}}] <a href="{{attach.url}}" target="_blank">{{attach.title}}</a>
+{% endif %}
+{% if attach.type == 'video' %}
+    <img src="{{attach.image}}"/><p>{{attach.title}}</p>
+{% endif %}
+{% if attach.type == 'wall' %}
+    wall post
+{% endif %}
+{% if attach.type == 'link' %}
+    <a href="{{attach.url}}" target="_blank">{{attach.title}}</a>
+{% endif %}
+{% endmacro %}
