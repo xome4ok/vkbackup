@@ -25,6 +25,9 @@ optional arguments:
   -h, --help            show this help message and exit
   ```
 
-token is obtained from vk.com - https://vk.com/dev/authcode_flow_user
+token is obtained from vk.com like this ```https://oauth.vk.com/authorize?client_id={app_id}&display=page&redirect_uri=vk.com&callback&scope=messages&response_type=token&v=5.64``` 
+(for detailed information address https://vk.com/dev/authcode_flow_user)
 
 Installation: ```git clone https://github.com/xome4ok/vkbackup && cd vkbackup && pip install .```
+
+Downloading photos with wget: ```vkbackup $USERNAME $TOKEN photo > $USERNAME_photo_urls && wget -i $USERNAME_photo_urls```
