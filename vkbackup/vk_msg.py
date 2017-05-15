@@ -5,6 +5,7 @@ from datetime import datetime
 from typing import List, Dict, Union, Any
 
 from vk.api import API as VKAPI
+from tqdm import tqdm
 
 
 def attachments_of_type(msgs: List[Dict], attach_type: str) -> List[Dict]:
@@ -210,30 +211,31 @@ class VkMessages:
         }
         all_messages = []
         n = 0
-        # total = (self.vkapi.messages.getHistory(chat_id=messages_gethistory_params['id'], count=0)
-        #         if is_chat
-        #         else self.vkapi.messages.getHistory(user_id=messages_gethistory_params['id'], count=0))[0]
+        total = (self.vkapi.messages.getHistory(chat_id=messages_gethistory_params['id'], count=0)
+                if is_chat
+                else self.vkapi.messages.getHistory(user_id=messages_gethistory_params['id'], count=0))[0]
         # print('Going to fetch {} messages'.format(total))
+        with tqdm(desc='Downloading messages', unit='msg', total=total) as progress:
+            while True:
+                msg_query_part = '''API.messages.getHistory({{"offset": {offset}, "count": 200, ''' + \
+                                 ('''"user_id" ''' if not is_chat else '''"chat_id" ''') + ''': {id}, "rev": {rev}}})+'''
+                msg_query = 'return '
+                for i in range(n, n + 4000, 200):
+                    msg_query += msg_query_part.format(offset=i,
+                                                       id=int(messages_gethistory_params['id']),
+                                                       rev=int(messages_gethistory_params['rev']))
+                msg_query = msg_query.strip('+')
+                msg_query += ';'
 
-        while True:
-            msg_query_part = '''API.messages.getHistory({{"offset": {offset}, "count": 200, ''' + \
-                             ('''"user_id" ''' if not is_chat else '''"chat_id" ''') + ''': {id}, "rev": {rev}}})+'''
-            msg_query = 'return '
-            for i in range(n, n + 4000, 200):
-                msg_query += msg_query_part.format(offset=i,
-                                                   id=int(messages_gethistory_params['id']),
-                                                   rev=int(messages_gethistory_params['rev']))
-            msg_query = msg_query.strip('+')
-            msg_query += ';'
+                current_bulk = self.vkapi.execute(code=msg_query)
+                time.sleep(1)
 
-            current_bulk = self.vkapi.execute(code=msg_query)
-            time.sleep(1)
-
-            all_messages.append(current_bulk)
-            n += len(current_bulk)
-            # print('Inserted {} elements.\nlast: {}'.format(n, all_messages[-1][-1]))
-            if type(current_bulk[-1]) is int:
-                break
+                all_messages.append(current_bulk)
+                n += len(current_bulk)
+                progress.update(len(current_bulk))
+                # print('Inserted {} elements.\nlast: {}'.format(n, all_messages[-1][-1]))
+                if type(current_bulk[-1]) is int:
+                    break
 
         flat = [y for x in all_messages for y in x]
         cleaned = [x for x in flat if type(x) is not int]
