@@ -37,7 +37,7 @@ def make(path, peer_id, msgs, participants, audio, photo):
 
     for audio_info in tqdm(valid_audio, desc='Downloading audios', unit='audio'):
         resp = requests.get(audio_info['url'], stream=True)
-        filename = "{} - {}.mp3".format(audio_info['artist'], audio_info['title'])
+        filename = "{} - {}.mp3".format(audio_info['artist'], audio_info['title'][:30])  # slicing to 30 to avoid long titles
         file = os.path.join(audio_path, normalize_string(filename))
         if os.path.isfile(file):
             continue
