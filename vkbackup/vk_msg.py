@@ -190,6 +190,8 @@ def audio_links(msgs: List[Dict]) -> List[Dict[str, Any]]:
 class VkMessages:
     """Convenient work with vk messages api."""
 
+    API_VERSION = '4.100'
+
     def __init__(self, vkapi: VKAPI) -> None:
         """
         :param vkapi: connected vk api
@@ -211,10 +213,11 @@ class VkMessages:
         }
         all_messages = []
         n = 0
-        total = (self.vkapi.messages.getHistory(chat_id=messages_gethistory_params['id'], count=0)
+        total = (self.vkapi.messages.getHistory(chat_id=messages_gethistory_params['id'], count=0, v=self.API_VERSION)
                 if is_chat
-                else self.vkapi.messages.getHistory(user_id=messages_gethistory_params['id'], count=0))[0]
-        # print('Going to fetch {} messages'.format(total))
+                else self.vkapi.messages.getHistory(user_id=messages_gethistory_params['id'], count=0, v=self.API_VERSION))
+        print('Going to fetch {} messages'.format(total))
+        total = total[0]
         with tqdm(desc='Downloading messages', unit='msg', total=total) as progress:
             while True:
                 msg_query_part = '''API.messages.getHistory({{"offset": {offset}, "count": 200, ''' + \
@@ -227,7 +230,7 @@ class VkMessages:
                 msg_query = msg_query.strip('+')
                 msg_query += ';'
 
-                current_bulk = self.vkapi.execute(code=msg_query)
+                current_bulk = self.vkapi.execute(code=msg_query, v=self.API_VERSION)
                 time.sleep(1)
 
                 all_messages.append(current_bulk)
@@ -265,7 +268,8 @@ class VkMessages:
         time.sleep(1)
         return self.vkapi.users.get(
             user_ids=str(user_id),
-            fields='name,screen_name'
+            fields='name,screen_name',
+            v=self.API_VERSION
         )[0]
 
     def save(self, path: str, user_id: Union[str, int]) -> None:
